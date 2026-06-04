@@ -1,14 +1,10 @@
-name: Auto Release Cool Terminal
-
-on:
-  push:
-    branches:
-      - master
+name: CI
 
 env:
   TAG_NAME: v1.0.0
+  VERSION: v1.a
   RELEASE_NAME: cool_prompt
-  ASSET_NAME: cool_terminal.zip
+  ASSET_NAME: cool_terminal-${{ env.VERSION }}.zip
 
 jobs:
   build-and-release:
@@ -28,7 +24,7 @@ jobs:
         run: |
           # Recursively zip the target framework structures
           # Excludes developmental workspace environments and markdown data
-          zip -r ${{ env.ASSET_NAME }} . -x ".asset/*" "update.json" ".git/*" ".github/*" "README.md" "LICENSE"
+          zip -r ${{ env.ASSET_NAME }} . -x ".asset/*" "update.json" ".git/*" ".github/*" "README.md" "CHANGELOG.md"  "LICENSE"
 
       - name: Publish Release via GitHub CLI
         env:
@@ -39,9 +35,9 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git tag -f ${{ env.TAG_NAME }}
           git push -f origin ${{ env.TAG_NAME }}
-          
+
           echo "Processing delivery payload utilizing GitHub CLI..."
-          
+
           # Attempt clean release compilation; if exists, gracefully fall back to asset clobbering
           gh release create ${{ env.TAG_NAME }} ${{ env.ASSET_NAME }} \
             --title "${{ env.RELEASE_NAME }}" \
