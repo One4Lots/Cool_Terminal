@@ -1,0 +1,63 @@
+# Copyright (c) 2010, 2012, 2013, 2014
+#	Thorsten Glaser <tg@mirbsd.org>
+# Minimal /system/etc/mkshrc for Android - Custom ParrotOS-Style
+# Modified for KernelSU Next
+
+set +o nohup
+
+# Add system_ext/bin to default PATH so bash, nano, rsync, etc. work seamlessly
+export PATH="$PATH:/system_ext/bin:/product/bin"
+
+# ---------------------------------------------------------
+# Define 8-bit colors using raw ANSI escape codes
+# (\001 and \002 replace bash's \[ and \] for proper line wrapping in mksh)
+# ---------------------------------------------------------
+c_red=$'\001\e[38;5;160m\002'
+c_bright_red=$'\001\e[38;5;196m\002'
+c_light_purple=$'\001\e[38;5;60m\002'
+c_orange=$'\001\e[38;5;172m\002'
+c_blue=$'\001\e[38;5;21m\002'
+c_light_blue=$'\001\e[38;5;80m\002'
+c_bold=$'\001\e[1m\002'
+c_reset=$'\001\e[0m\002'
+
+at_color="${c_reset}${c_bold}${c_orange}"
+host_color="${c_reset}${c_bold}${c_blue}"
+directory_color="${c_reset}${c_light_purple}"
+etc_color="${c_reset}${c_red}"
+
+# ---------------------------------------------------------
+# Root vs Non-Root Logic
+# ---------------------------------------------------------
+if (( USER_ID == 0 )); then
+    username_color="${c_reset}${c_bold}${c_bright_red}"
+    symbol_char="Σ"
+    current_user="root"
+else
+    username_color="${c_reset}${c_bold}${c_light_blue}"
+    symbol_char="λ"
+    current_user="$(whoami)"
+fi
+
+# Fallback hostname just in case $HOSTNAME is empty on your specific ROM
+current_host="${HOSTNAME:-$(getprop ro.product.device)}"
+
+# ---------------------------------------------------------
+# Error detection block native to mksh
+# (Updated syntax to use short-circuit evaluation instead of
+# an 'if' block to prevent syntax errors during dynamic parsing)
+# ---------------------------------------------------------
+err_block='${|
+    local e=$?
+    (( e )) && REPLY="'${etc_color}'['${at_color}'✗'${etc_color}']─"
+    return $e
+}'
+
+# ---------------------------------------------------------
+# Construct PS1
+# ---------------------------------------------------------
+PS1="${etc_color}┌─${err_block}[${username_color}${current_user}${at_color}@${host_color}${current_host}${etc_color}]-[${directory_color}"'$PWD'"${etc_color}]"
+PS1+=$'\n'"${etc_color}└──╼ ${username_color}${symbol_char}${c_reset} "
+
+export PS1
+export TERM=xterm-256color

@@ -1,0 +1,49 @@
+name: Auto Release Cool Terminal
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  TAG_NAME: v1.0.0
+  RELEASE_NAME: cool_prompt
+  ASSET_NAME: cool_terminal.zip
+
+jobs:
+  build-and-release:
+    name: Build Zip and Create Release
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Compress Repository Code
+        run: |
+          # Recursively zip the target framework structures
+          # Excludes developmental workspace environments and markdown data
+          zip -r ${{ env.ASSET_NAME }} . -x ".asset/*" "update.json" ".git/*" ".github/*" "README.md" "LICENSE"
+
+      - name: Publish Release via GitHub CLI
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Ensure local git tags are synchronized dynamically
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -f ${{ env.TAG_NAME }}
+          git push -f origin ${{ env.TAG_NAME }}
+          
+          echo "Processing delivery payload utilizing GitHub CLI..."
+          
+          # Attempt clean release compilation; if exists, gracefully fall back to asset clobbering
+          gh release create ${{ env.TAG_NAME }} ${{ env.ASSET_NAME }} \
+            --title "${{ env.RELEASE_NAME }}" \
+            --notes "Automated rolling distribution build." || \
+          gh release upload ${{ env.TAG_NAME }} ${{ env.ASSET_NAME }} --clobber
