@@ -1,8 +1,8 @@
 id=cool_prompt
 name=🕹️ Cool Terminal
-version=v1.a
+version=v1.b
 versionCode=1a
 author=One4Lots
 description=Replaces Android's default mkshrc with a custom, colorful ParrotOS Style prompt (for root & non-root) and adds /system_ext/bin and /product/bin to the $PATH which contains some usefull binary.
 updateJason=https://raw.githubusercontent.com/One4Lots/Cool_Terminal/refs/heads/master/update.json
-banner=https://raw.githubusercontent.com/One4Lots/Cool_Terminal/refs/heads/master/.asset/asset.png
+banner=https://raw.githubusercontent.com/One4Lots/Cool_Terminal/refs/heads/master/.asset/banner.png
