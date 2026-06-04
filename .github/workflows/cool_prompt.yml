@@ -1,5 +1,8 @@
 name: CI
 
+on:
+  workflow_dispatch:
+  
 env:
   TAG_NAME: v1.0.0
   VERSION: v1.a
