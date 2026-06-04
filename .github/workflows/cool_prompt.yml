@@ -4,7 +4,6 @@ env:
   TAG_NAME: v1.0.0
   VERSION: v1.a
   RELEASE_NAME: cool_prompt
-  ASSET_NAME: cool_terminal-${{ env.VERSION }}.zip
 
 jobs:
   build-and-release:
@@ -22,9 +21,8 @@ jobs:
 
       - name: Compress Repository Code
         run: |
-          # Recursively zip the target framework structures
-          # Excludes developmental workspace environments and markdown data
-          zip -r ${{ env.ASSET_NAME }} . -x ".asset/*" "update.json" ".git/*" ".github/*" "README.md" "CHANGELOG.md"  "LICENSE"
+          echo "ASSET_NAME=cool_terminal-${{ env.VERSION }}.zip" >> $GITHUB_ENV
+          zip -r9 ${{ env.ASSET_NAME }} . -x ".asset/*" "update.json" ".git/*" ".github/*" "README.md" "CHANGELOG.md"  "LICENSE"
 
       - name: Publish Release via GitHub CLI
         env:
