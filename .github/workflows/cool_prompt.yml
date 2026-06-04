@@ -24,8 +24,9 @@ jobs:
 
       - name: Compress Repository Code
         run: |
-          echo "ASSET_NAME=cool_terminal-${{ env.VERSION }}.zip" >> $GITHUB_ENV
-          zip -r9 ${{ env.ASSET_NAME }} . -x ".asset/*" "update.json" ".git/*" ".github/*" "README.md" "CHANGELOG.md"  "LICENSE"
+          ZIP_NAME=cool_terminal-${{ env.VERSION }}.zip
+          zip -r9 $ZIP_NAME . -x ".asset/*" "update.json" ".git/*" ".github/*" "README.md" "CHANGELOG.md"  "LICENSE"
+          echo "ASSET_NAME=$ZIP_NAME" >> $GITHUB_ENV
 
       - name: Publish Release via GitHub CLI
         env:
