@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/Magisk-Supported-00AF9C?style=for-the-badge&logo=magisk&logoColor=white" alt="Magisk Supported">
   <br>
   <img src="https://img.shields.io/github/v/release/One4Lots/Cool_Terminal?style=for-the-badge&color=025E73" alt="GitHub Release">
-  <img src="https://img.shields.io/github/license/One4Lots/Cool_Terminal?style=for-the-badge&color=555555" alt="License">
+  <img src="https://img.shields.io/github/license/One4Lots/Cool_Terminal?style=for-the-badge&color=FF0000" alt="License">
 </div>
 
 <br>
@@ -35,7 +35,7 @@
 
 <br>
  
-> 🧩 Grab the latest automated `v1.0.0` build zip directly from our [Releases Page](https://github.com/One4Lots/Cool_Terminal/releases/tag/v1.0.0).
+> 🧩 Grab the `latest` automated build zip directly from our [Releases Page](https://github.com/One4Lots/Cool_Terminal/releases/tag/v1.0.0).
 
 </div>
 
@@ -68,7 +68,7 @@ This utility layout script is fully optimized and structurally tested across the
 
 1. **Download:** Navigate over to the [Releases Section](https://github.com/One4Lots/Cool_Terminal/releases) and fetch the compiled `cool_terminal.zip` module archive.
 2. **Flash:** 
-   * **For KernelSU / KSU-Next:** Open your manager application, go to the MODULE repository, tap **Install**, it will install the module.
+   * **For KernelSU / KSU-Next:** Open your manager application, go to the MODULE repository find the module, tap **Install**, it will install the module.
    * **For Magisk / APatch:** Open Magisk App, access the **Modules** section on the bottom right panel, select **Install from storage**, and confirm choice.
 3. **Reboot:** Power cycle your Android device to activate the virtual mounting systems.
 4. **Launch:** Run your preferred environment shell (e.g., Termux), declare `su`, and welcome your custom terminal layout!
@@ -77,7 +77,7 @@ This utility layout script is fully optimized and structurally tested across the
 
 ## 🤝 Contributing & License
 
-Feel free to open feature requests, issue tickets, or style optimization pull requests inside our tracker layout. This terminal project is maintained and distributed openly under the **MIT License**.
+Feel free to open feature requests, issue tickets, or style optimization pull requests inside our tracker layout. This terminal project is maintained and distributed openly under the **GPL-2.0**.
 
 <br>
 
